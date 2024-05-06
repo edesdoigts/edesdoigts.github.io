@@ -6,75 +6,17 @@
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 <base target="_blank">
 <link rel="stylesheet" type="text/css" href="./Qgis2threejs.css">
-<link rel="stylesheet" type="text/css" href="./mobile.css">
-<script defer src="./fontawesome/solid.min.js"></script>
-<script defer src="./fontawesome/fontawesome.min.js"></script>
 <script src="./threejs/three.min.js"></script>
 <script src="./threejs/OrbitControls.js"></script>
 <script src="./threejs/ViewHelper.js"></script>
-<script src="./proj4js/proj4.js"></script>
 <script src="./Qgis2threejs.js"></script>
-<script src="./threejs/DeviceOrientationControls.js"></script>
-<script src="./mobile.js"></script>
+<script src="./dat-gui/dat.gui.min.js"></script>
+<script src="./dat-gui_panel.js"></script>
 </head>
 <body>
-
-<video id="video" autoplay></video>
 <div id="view">
   <div id="northarrow"></div>
   <div id="navigation"></div>
-</div>
-
-<!-- buttons -->
-<button class="btn" id="stop-button" title="stop orbitting"><i class="fas fa-stop-circle fa-2x"></i></button>
-
-<label class="switch" title="AR mode">
-  <div>AR</div>
-  <input type="checkbox" id="ar-checkbox">
-  <span class="slider"></span>
-</label>
-
-<button class="btn" id="current-location" title="move to current location"><i class="fas fa-crosshairs fa-2x"></i></button>
-
-<div class="expand">
-  <input type="checkbox" id="expand-checkbox">
-  <label for="expand-checkbox" title="show/hide buttons">
-    <div class="btn btn1"><i class="fas fa-ellipsis-h fa-2x"></i></div>
-  </label>
-  <button class="btn btn2" id="layers-button" title="layer list"><i class="fas fa-layer-group fa-2x"></i></button>
-  <button class="btn btn3" id="settings-button" title="settings"><i class="fas fa-cog fa-2x"></i></button>
-  <button class="btn btn4" id="info-button" title="about this page"><i class="fas fa-info-circle fa-2x"></i></button>
-</div>
-
-<!-- layer panel -->
-<div id="layerpanel">
-  <div id="layerlist"></div>
-</div>
-
-<!-- settings -->
-<div id="settings">
-  <div>AR mode camera settings</div>
-  <div>
-    <div>
-      <label>
-        Enabled: <input type="checkbox" id="camera-enabled" checked disabled>
-      </label>
-    </div>
-    <div>
-      <label>
-        Field of View (in degrees): <input type="number" id="fov">
-      </label>
-    </div>
-  </div>
-  <div>
-    <label>
-      <input type="checkbox" id="save-in-storage"> Save settings in local storage
-    </label>
-  </div>
-  <div>
-    <button id="settings-ok">OK</button>
-    <button id="settings-cancel">Cancel</button>
-  </div>
 </div>
 
 <!-- popup -->
@@ -101,28 +43,40 @@
       </table>
 
       <!-- camera actions and measure tool -->
-      <div class="action-btn action-move" onclick="startARModeHere()">Start AR mode here</div>
-      <div class="action-btn action-move hidden" onclick="moveHere()">Move here</div>
       <div id="orbitbtn" class="action-btn action-orbit">Orbit</div>
       <div id="measurebtn" class="action-btn">Measure distance</div>
     </div>
 
     <!-- page info -->
     <div id="pageinfo">
+      <h1>Current View URL</h1>
+      <div><input id="urlbox" type="text"></div>
+
       <h1>Usage</h1>
       <table id="usage">
-        <tr><td colspan="2" class="star">Non-AR mode</td></tr>
-        <tr><td>One Finger Move</td><td>Orbit</td></tr>
-        <tr><td>Two Fingers Pinch</td><td>Zoom</td></tr>
-        <tr><td>Two Fingers Move</td><td>Pan</td></tr>
+        <tr><td colspan="2" class="star">Mouse</td></tr>
+        <tr><td>Left button + Move</td><td>Orbit</td></tr>
+        <tr><td>Mouse Wheel</td><td>Zoom</td></tr>
+        <tr><td>Right button + Move</td><td>Pan</td></tr>
+
+        <tr><td colspan="2" class="star">Keys</td></tr>
+        <tr><td>Arrow keys</td><td>Move Horizontally</td></tr>
+        <tr><td>Shift + Arrow keys</td><td>Orbit</td></tr>
+        <tr><td>Ctrl + Arrow keys</td><td>Rotate</td></tr>
+        <tr><td>Shift + Ctrl + Up / Down</td><td>Zoom In / Out</td></tr>
+        <tr><td>L</td><td>Toggle Label Visibility</td></tr>
+        <tr><td>R</td><td>Start / Stop Orbit Animation</td></tr>
+        <tr><td>W</td><td>Wireframe Mode</td></tr>
+        <tr><td>Shift + R</td><td>Reset Camera Position</td></tr>
+        <tr><td>Shift + S</td><td>Save Image</td></tr>
       </table>
 
       <h1>About</h1>
       <div id="about">
         This page was made with <a href="https://www.qgis.org/">QGIS</a> and <a href="https://github.com/minorua/Qgis2threejs">Qgis2threejs</a> plugin (version 2.7.3).
         <div>Powered by <a href="https://threejs.org/">three.js</a>,
-        <a href="https://trac.osgeo.org/proj4js/">Proj4js</a> and
-        <a href="https://fontawesome.com/">Font Awesome</a>.</div>
+        <a href="https://code.google.com/p/dat-gui/">dat-gui</a>
+        <span id="lib_proj4js"> and <a href="https://trac.osgeo.org/proj4js/">Proj4js</a></span>.</div>
       </div>
     </div>
   </div>
@@ -144,29 +98,31 @@
 </div>
 
 <script>
+Q3D.Config.viewpoint = {lookAt:{x:523506.47295681504,y:8588218.303609049,z:-2.435467860677554e-15},pos:{x:524007.84162396204,y:8587764.456658844,z:241.9223237034879}};
 Q3D.Config.localMode = true;
-Q3D.Config.AR.MND = 0.0;
 
 var container = document.getElementById("view"),
     app = Q3D.application,
     gui = Q3D.gui;
 
-app.init(container);          // initialize viewer
-init();                       // initialization for mobile template (in mobile.js)
+app.init(container);    // initialize viewer
 
 // load the scene
 app.loadSceneFile("./data/pak/scene.js", function (scene) {
   // scene file has been loaded
   app.start();
 
-  if ("AR" in app.urlParams) {
-    document.getElementById("ar-checkbox").checked = true;
-    startARMode();
-    moveToCurrentLocation();
-  }
+  gui.dat.initLayersFolder(scene);
+
 }, function (scene) {
   // all relevant files have been loaded
 
+  if (Q3D.Config.gui.customPlane) {
+    // specify preferred values. If not specified, z range of scene bounding box is used.
+    var zMin = undefined,
+        zMax = undefined;
+    gui.dat.initCustomPlaneFolder(zMin, zMax);
+  }
 });
 </script>
 </body>
