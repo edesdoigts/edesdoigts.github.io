@@ -754,3 +754,17 @@ function fnc__specialcol_(values, context) {
 function fnc_project_color(values, context) {
     return false;
 };
+
+
+
+function exp_label_optionsparcelle_2_eval_expression(context) {
+    // concat(descr, ' (', surface, 'm2)')
+
+    var feature = context.feature;
+    
+    if (feature.properties) {
+        return fnc_concat([feature.properties['descr'] ,' (',feature.properties['surface'] ,'m2)'], context);
+    } else {
+        return fnc_concat([feature['descr'] ,' (',feature['surface'] ,'m2)'], context);
+    }
+}
