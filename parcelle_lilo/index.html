@@ -13,8 +13,8 @@
         <link rel="stylesheet" href="css/fontawesome-all.min.css">
         <style>
         #map {
-            width: 1031px;
-            height: 1120px;
+            width: 1585px;
+            height: 1125px;
         }
         </style>
         <title>Parcelle Lilo Bambou</title>
@@ -34,13 +34,12 @@
         <script src="js/rbush.min.js"></script>
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
-        <script src="data/Zones__restaurerVF_0.js"></script>
         <script src="data/cadastre_1.js"></script>
         <script src="data/optionsparcelle_2.js"></script>
         <script>
         var map = L.map('map', {
             zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[-12.839646889735361,45.14125883433719],[-12.836355268484553,45.144346599146694]]);
+        }).fitBounds([[-12.839845700338897,45.140190275274854],[-12.836259554981151,45.14533997293617]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -89,92 +88,15 @@
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
         }
-        function pop_Zones__restaurerVF_0(feature, layer) {
-            var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['ACTION'] !== null ? autolinker.link(feature.properties['ACTION'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['SURFACE'] !== null ? autolinker.link(feature.properties['SURFACE'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['layer'] !== null ? autolinker.link(feature.properties['layer'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['path'] !== null ? autolinker.link(feature.properties['path'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
-            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) {
-				addClassToPopupIfMedia(content, e.popup);
-			});
-			layer.bindPopup(content, { maxHeight: 400 });
-        }
-
-        var pattern_Zones__restaurerVF_0_0 = new L.StripePattern({
-            weight: 0.3,
-            spaceWeight: 2.0,
-            color: '#4daf4a',
-            opacity: 1.0,
-            spaceOpacity: 0,
-            angle: 225
-        });
-        pattern_Zones__restaurerVF_0_0.addTo(map);
-        function style_Zones__restaurerVF_0_0(feature) {
-            switch(String(feature.properties['ACTION'])) {
-                case 'Réservoir de biodiversité':
-                    return {
-                pane: 'pane_Zones__restaurerVF_0',
-                opacity: 1,
-                color: 'rgba(255,255,255,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(89,110,59,1.0)',
-                interactive: true,
-            }
-                    break;
-                case 'Corridor':
-                    return {
-                pane: 'pane_Zones__restaurerVF_0',
-                stroke: false, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(158,175,7,1.0)',
-                interactive: true,
-            }
-                    break;
-                case 'Lisière agroforestière dense':
-                    return {
-                pane: 'pane_Zones__restaurerVF_0',
-                stroke: false,
-                fillOpacity: 1,
-                fillPattern: pattern_Zones__restaurerVF_0_0,
-                interactive: true,
-            }
-                    break;
-            }
-        }
-        map.createPane('pane_Zones__restaurerVF_0');
-        map.getPane('pane_Zones__restaurerVF_0').style.zIndex = 400;
-        map.getPane('pane_Zones__restaurerVF_0').style['mix-blend-mode'] = 'normal';
-        var layer_Zones__restaurerVF_0 = new L.geoJson(json_Zones__restaurerVF_0, {
-            attribution: '',
-            interactive: true,
-            dataVar: 'json_Zones__restaurerVF_0',
-            layerName: 'layer_Zones__restaurerVF_0',
-            pane: 'pane_Zones__restaurerVF_0',
-            onEachFeature: pop_Zones__restaurerVF_0,
-            style: style_Zones__restaurerVF_0_0,
-        });
-        bounds_group.addLayer(layer_Zones__restaurerVF_0);
-        map.addLayer(layer_Zones__restaurerVF_0);
+        map.createPane('pane_Accumulationdeflux_0');
+        map.getPane('pane_Accumulationdeflux_0').style.zIndex = 400;
+        var img_Accumulationdeflux_0 = 'data/Accumulationdeflux_0.png';
+        var img_bounds_Accumulationdeflux_0 = [[-12.850072952395204,45.129830706199556],[-12.830900437593838,45.150152703504624]];
+        var layer_Accumulationdeflux_0 = new L.imageOverlay(img_Accumulationdeflux_0,
+                                              img_bounds_Accumulationdeflux_0,
+                                              {pane: 'pane_Accumulationdeflux_0'});
+        bounds_group.addLayer(layer_Accumulationdeflux_0);
+        map.addLayer(layer_Accumulationdeflux_0);
         function pop_cadastre_1(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
@@ -206,6 +128,18 @@
                     </tr>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['ref'] !== null ? autolinker.link(feature.properties['ref'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['auxiliary_storage_labeling_lineanchorpercent'] !== null ? autolinker.link(feature.properties['auxiliary_storage_labeling_lineanchorpercent'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['auxiliary_storage_labeling_lineanchorclipping'] !== null ? autolinker.link(feature.properties['auxiliary_storage_labeling_lineanchorclipping'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['auxiliary_storage_labeling_lineanchortype'] !== null ? autolinker.link(feature.properties['auxiliary_storage_labeling_lineanchortype'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['auxiliary_storage_labeling_lineanchortextpoint'] !== null ? autolinker.link(feature.properties['auxiliary_storage_labeling_lineanchortextpoint'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
@@ -258,23 +192,35 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
+        var pattern_optionsparcelle_2_0 = new L.StripePattern({
+            weight: 0.3,
+            spaceWeight: 2.0,
+            color: '#000000',
+            opacity: 1.0,
+            spaceOpacity: 0,
+            angle: 315
+        });
+        pattern_optionsparcelle_2_0.addTo(map);
         function style_optionsparcelle_2_0() {
             return {
                 pane: 'pane_optionsparcelle_2',
-                interactive: true,
+                stroke: false,
+                fillOpacity: 1,
+                fillPattern: pattern_optionsparcelle_2_0,
+                interactive: false,
             }
         }
         function style_optionsparcelle_2_1() {
             return {
                 pane: 'pane_optionsparcelle_2',
                 opacity: 1,
-                color: 'rgba(255,255,255,1.0)',
+                color: 'rgba(0,0,0,1.0)',
                 dashArray: '',
                 lineCap: 'square',
                 lineJoin: 'bevel',
-                weight: 1.0,
+                weight: 2.0,
                 fillOpacity: 0,
-                interactive: true,
+                interactive: false,
             }
         }
         map.createPane('pane_optionsparcelle_2');
@@ -282,7 +228,7 @@
         map.getPane('pane_optionsparcelle_2').style['mix-blend-mode'] = 'normal';
         var layer_optionsparcelle_2 = new L.geoJson.multiStyle(json_optionsparcelle_2, {
             attribution: '',
-            interactive: true,
+            interactive: false,
             dataVar: 'json_optionsparcelle_2',
             layerName: 'layer_optionsparcelle_2',
             pane: 'pane_optionsparcelle_2',
@@ -298,7 +244,7 @@
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['ref'] !== null?String('<div style="color: #ff0000; font-size: 12pt; font-weight: bold; font-family: \'.AppleSystemUIFont\', sans-serif;">' + layer.feature.properties['ref']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_cadastre_1'});
+            layer.bindTooltip((exp_label_cadastre_1_eval_expression(context) !== null?String('<div style="color: #ff0000; font-size: 12pt; font-family: \'Ubuntu\', sans-serif;">' + exp_label_cadastre_1_eval_expression(context)) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_cadastre_1'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
@@ -311,12 +257,17 @@
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((exp_label_optionsparcelle_2_eval_expression(context) !== null?String('<div style="color: #ffffff; font-size: 14pt; font-weight: bold; font-family: \'Helvetica\', sans-serif;">' + exp_label_optionsparcelle_2_eval_expression(context)) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_optionsparcelle_2'});
+            layer.bindTooltip((exp_label_optionsparcelle_2_eval_expression(context) !== null?String('<div style="color: #000000; font-size: 14pt; font-family: \'Ubuntu\', sans-serif;">' + exp_label_optionsparcelle_2_eval_expression(context)) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_optionsparcelle_2'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
               addLabel(layer, i);
               i++;
+        });
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
         });
         resetLabels([layer_cadastre_1,layer_optionsparcelle_2]);
         map.on("zoomend", function(){

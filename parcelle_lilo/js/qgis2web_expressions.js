@@ -757,14 +757,27 @@ function fnc_project_color(values, context) {
 
 
 
-function exp_label_optionsparcelle_2_eval_expression(context) {
-    // concat(descr, ' (', surface, 'm2)')
+function exp_label_cadastre_1_eval_expression(context) {
+    // concat(section, ' ', numero)
 
     var feature = context.feature;
     
     if (feature.properties) {
-        return fnc_concat([feature.properties['descr'] ,' (',feature.properties['surface'] ,'m2)'], context);
+        return fnc_concat([feature.properties['section'] ,' ',feature.properties['numero'] ], context);
     } else {
-        return fnc_concat([feature['descr'] ,' (',feature['surface'] ,'m2)'], context);
+        return fnc_concat([feature['section'] ,' ',feature['numero'] ], context);
+    }
+}
+
+
+function exp_label_optionsparcelle_2_eval_expression(context) {
+    // descr
+
+    var feature = context.feature;
+    
+    if (feature.properties) {
+        return feature.properties['descr'] ;
+    } else {
+        return feature['descr'] ;
     }
 }
